@@ -1,0 +1,198 @@
+{
+  "domain": {
+    "name": "FaultlineBondEscrow",
+    "version": "1",
+    "chainId": "84532",
+    "verifyingContract": "<deployed escrow address>"
+  },
+  "types": {
+    "ActivationAuthorization": [
+      {
+        "name": "workflowId",
+        "type": "bytes32"
+      },
+      {
+        "name": "workflowHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "termsHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "genlayerChainId",
+        "type": "uint256"
+      },
+      {
+        "name": "genlayerContract",
+        "type": "address"
+      },
+      {
+        "name": "caseId",
+        "type": "bytes32"
+      },
+      {
+        "name": "snapshotHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "decisionId",
+        "type": "bytes32"
+      },
+      {
+        "name": "phase",
+        "type": "uint8"
+      },
+      {
+        "name": "nonce",
+        "type": "uint256"
+      },
+      {
+        "name": "expiry",
+        "type": "uint256"
+      }
+    ],
+    "ReservationAuthorization": [
+      {
+        "name": "workflowId",
+        "type": "bytes32"
+      },
+      {
+        "name": "workflowHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "termsHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "genlayerChainId",
+        "type": "uint256"
+      },
+      {
+        "name": "genlayerContract",
+        "type": "address"
+      },
+      {
+        "name": "caseId",
+        "type": "bytes32"
+      },
+      {
+        "name": "snapshotHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "decisionId",
+        "type": "bytes32"
+      },
+      {
+        "name": "phase",
+        "type": "uint8"
+      },
+      {
+        "name": "nonce",
+        "type": "uint256"
+      },
+      {
+        "name": "expiry",
+        "type": "uint256"
+      },
+      {
+        "name": "remedyId",
+        "type": "bytes32"
+      },
+      {
+        "name": "classesHash",
+        "type": "bytes32"
+      }
+    ],
+    "ReleaseAuthorization": [
+      {
+        "name": "workflowId",
+        "type": "bytes32"
+      },
+      {
+        "name": "workflowHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "termsHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "genlayerChainId",
+        "type": "uint256"
+      },
+      {
+        "name": "genlayerContract",
+        "type": "address"
+      },
+      {
+        "name": "caseId",
+        "type": "bytes32"
+      },
+      {
+        "name": "snapshotHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "decisionId",
+        "type": "bytes32"
+      },
+      {
+        "name": "phase",
+        "type": "uint8"
+      },
+      {
+        "name": "nonce",
+        "type": "uint256"
+      },
+      {
+        "name": "expiry",
+        "type": "uint256"
+      },
+      {
+        "name": "remedyId",
+        "type": "bytes32"
+      },
+      {
+        "name": "reservationDecisionId",
+        "type": "bytes32"
+      },
+      {
+        "name": "reservationSnapshotHash",
+        "type": "bytes32"
+      },
+      {
+        "name": "repairHash",
+        "type": "bytes32"
+      }
+    ]
+  },
+  "phases": {
+    "ActivationAuthorization": 1,
+    "ReservationAuthorization": 2,
+    "ReleaseAuthorization": 3
+  },
+  "stateCodes": {
+    "Missing": 0,
+    "Funding": 1,
+    "Active": 2,
+    "CaseOpen": 3,
+    "Reserved": 4,
+    "Released": 5,
+    "Expired": 6
+  },
+  "classes": {
+    "absent": 0,
+    "primary": 1,
+    "contributory": 2,
+    "downstream_consequence": 3,
+    "excused": 4,
+    "unresolved": 5
+  },
+  "classesHash": "keccak256(abi.encode(uint8[] classes)); NOT packed, NOT EIP-712 array hashing",
+  "termsHash": "keccak256(abi.encode(all createWorkflow arguments in ABI order))",
+  "idEncoding": "workflow/case/snapshot/decision IDs: protocol bytes32; node and remedy slugs: sha256(UTF8(id))",
+  "deadlines": "Exclusive: require now < expiry AND now < hardDeadline; release also now < repairDeadline. expiry <= hardDeadline."
+}

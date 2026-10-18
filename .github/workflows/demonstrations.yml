@@ -1,0 +1,53 @@
+name: Faultline testnet demonstrations
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: faultline-testnet-demo-callers
+  cancel-in-progress: false
+jobs:
+  advance:
+    if: vars.FAULTLINE_DEMOS_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: testnet
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Advance the same nine workflows through native finality and cure windows
+        run: node --import tsx scripts/run-demos.ts
+        env:
+          FAULTLINE_DEMOS_ENABLED: ${{ vars.FAULTLINE_DEMOS_ENABLED }}
+          FAULTLINE_DEMO_RUN_PREFIX: ${{ vars.FAULTLINE_DEMO_RUN_PREFIX }}
+          FAULTLINE_API_URL: ${{ vars.FAULTLINE_API_URL }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          MONGODB_DATABASE: ${{ vars.MONGODB_DATABASE }}
+          PUBLIC_ORIGIN: ${{ vars.PUBLIC_ORIGIN }}
+          GENLAYER_RPC_URL: ${{ secrets.GENLAYER_RPC_URL }}
+          GENLAYER_EVM_RPC_URL: ${{ secrets.GENLAYER_EVM_RPC_URL }}
+          BASE_RPC_URL: ${{ secrets.BASE_RPC_URL }}
+          GENLAYER_CONTRACT_ADDRESS: ${{ vars.GENLAYER_CONTRACT_ADDRESS }}
+          BASE_ESCROW_ADDRESS: ${{ vars.BASE_ESCROW_ADDRESS }}
+          GENLAYER_CODE_HASH: ${{ vars.GENLAYER_CODE_HASH }}
+          BASE_CODE_HASH: ${{ vars.BASE_CODE_HASH }}
+          ATTESTOR_ADDRESS: ${{ vars.ATTESTOR_ADDRESS }}
+          DEMO_AGENT_A_PRIVATE_KEY: ${{ secrets.DEMO_AGENT_A_PRIVATE_KEY }}
+          DEMO_AGENT_B_PRIVATE_KEY: ${{ secrets.DEMO_AGENT_B_PRIVATE_KEY }}
+          DEMO_AGENT_C_PRIVATE_KEY: ${{ secrets.DEMO_AGENT_C_PRIVATE_KEY }}
+          DEMO_REPAIRER_PRIVATE_KEY: ${{ secrets.DEMO_REPAIRER_PRIVATE_KEY }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-demonstration-evidence
+          if-no-files-found: ignore
+          path: |
+            artifacts/demo-status.json
+            artifacts/consensus/
+            artifacts/live/

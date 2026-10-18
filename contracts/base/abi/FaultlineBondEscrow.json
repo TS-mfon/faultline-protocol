@@ -1,0 +1,1512 @@
+[
+  {
+    "type": "constructor",
+    "inputs": [
+      {
+        "name": "usdc_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "attestor_",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "guardian_",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "ACTIVATION_PHASE",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8",
+        "internalType": "uint8"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "ACTIVATION_TYPEHASH",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "LOCK_DURATION",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "MAX_AMOUNT",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "RELEASE_PHASE",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8",
+        "internalType": "uint8"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "RELEASE_TYPEHASH",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "REPAIR_WINDOW",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "RESERVATION_PHASE",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8",
+        "internalType": "uint8"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "RESERVATION_TYPEHASH",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "USDC",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "activateWorkflow",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "tuple",
+        "internalType": "struct FaultlineBondEscrow.ActivationAuthorization",
+        "components": [
+          {
+            "name": "workflowId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "workflowHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "termsHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "genlayerChainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "genlayerContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "caseId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "snapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "decisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "phase",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "expiry",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      {
+        "name": "signature",
+        "type": "bytes",
+        "internalType": "bytes"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "attestor",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "balance",
+    "inputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "bondCap",
+    "inputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "createWorkflow",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "workflowHash",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "agents",
+        "type": "address[]",
+        "internalType": "address[]"
+      },
+      {
+        "name": "caps",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "repairCap",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "repairs",
+        "type": "tuple[]",
+        "internalType": "struct FaultlineBondEscrow.RepairAction[]",
+        "components": [
+          {
+            "name": "id",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "recipient",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "price",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      },
+      {
+        "name": "nodeIds",
+        "type": "bytes32[]",
+        "internalType": "bytes32[]"
+      },
+      {
+        "name": "nodeAgents",
+        "type": "uint8[]",
+        "internalType": "uint8[]"
+      },
+      {
+        "name": "genlayerChainId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "genlayerContract",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "depositBond",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "domainSeparator",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getAccount",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "agent",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "cap",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "deposited",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "credit",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "debit",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "withdrawable",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getTerms",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "agents",
+        "type": "address[]",
+        "internalType": "address[]"
+      },
+      {
+        "name": "nodeIds",
+        "type": "bytes32[]",
+        "internalType": "bytes32[]"
+      },
+      {
+        "name": "nodeAgents",
+        "type": "uint8[]",
+        "internalType": "uint8[]"
+      },
+      {
+        "name": "repairs",
+        "type": "tuple[]",
+        "internalType": "struct FaultlineBondEscrow.RepairAction[]",
+        "components": [
+          {
+            "name": "id",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "recipient",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "price",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getWorkflow",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "internalType": "struct FaultlineBondEscrow.Workflow",
+        "components": [
+          {
+            "name": "state",
+            "type": "uint8",
+            "internalType": "enum FaultlineBondEscrow.State"
+          },
+          {
+            "name": "workflowHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "termsHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "genlayerChainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "genlayerContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "repairCap",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "hardDeadline",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "repairDeadline",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "nextNonce",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "fundedCount",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "caseId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "activationDecisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "activationSnapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "repairDecisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "repairSnapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "repairHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "reservationDecisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "reservationSnapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "remedyId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "reserved",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "guardian",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "hashActivation",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "tuple",
+        "internalType": "struct FaultlineBondEscrow.ActivationAuthorization",
+        "components": [
+          {
+            "name": "workflowId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "workflowHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "termsHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "genlayerChainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "genlayerContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "caseId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "snapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "decisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "phase",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "expiry",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "hashRelease",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "tuple",
+        "internalType": "struct FaultlineBondEscrow.ReleaseAuthorization",
+        "components": [
+          {
+            "name": "workflowId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "workflowHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "termsHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "genlayerChainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "genlayerContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "caseId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "snapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "decisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "phase",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "expiry",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "remedyId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "reservationDecisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "reservationSnapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "repairHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "hashReservation",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "tuple",
+        "internalType": "struct FaultlineBondEscrow.ReservationAuthorization",
+        "components": [
+          {
+            "name": "workflowId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "workflowHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "termsHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "genlayerChainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "genlayerContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "caseId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "snapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "decisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "phase",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "expiry",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "remedyId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "classesHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "openCase",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "caseId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "originalDeposit",
+    "inputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "pause",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "paused",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "refundExpired",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "releaseRepair",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "tuple",
+        "internalType": "struct FaultlineBondEscrow.ReleaseAuthorization",
+        "components": [
+          {
+            "name": "workflowId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "workflowHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "termsHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "genlayerChainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "genlayerContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "caseId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "snapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "decisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "phase",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "expiry",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "remedyId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "reservationDecisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "reservationSnapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "repairHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ]
+      },
+      {
+        "name": "signature",
+        "type": "bytes",
+        "internalType": "bytes"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "reserveAward",
+    "inputs": [
+      {
+        "name": "a",
+        "type": "tuple",
+        "internalType": "struct FaultlineBondEscrow.ReservationAuthorization",
+        "components": [
+          {
+            "name": "workflowId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "workflowHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "termsHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "genlayerChainId",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "genlayerContract",
+            "type": "address",
+            "internalType": "address"
+          },
+          {
+            "name": "caseId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "snapshotHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "decisionId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "phase",
+            "type": "uint8",
+            "internalType": "uint8"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "expiry",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          {
+            "name": "remedyId",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          },
+          {
+            "name": "classesHash",
+            "type": "bytes32",
+            "internalType": "bytes32"
+          }
+        ]
+      },
+      {
+        "name": "classes",
+        "type": "uint8[]",
+        "internalType": "uint8[]"
+      },
+      {
+        "name": "signature",
+        "type": "bytes",
+        "internalType": "bytes"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "reservedDebit",
+    "inputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "totalLiability",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "withdraw",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "withdrawFor",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "beneficiary",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "event",
+    "name": "AwardReserved",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "remedyId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "decisionId",
+        "type": "bytes32",
+        "indexed": false,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "snapshotHash",
+        "type": "bytes32",
+        "indexed": false,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "deadline",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "BondDeposited",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "agent",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "CaseOpened",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "caseId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "reporter",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "PauseChanged",
+    "inputs": [
+      {
+        "name": "paused",
+        "type": "bool",
+        "indexed": false,
+        "internalType": "bool"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RepairReleased",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "decisionId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "repairHash",
+        "type": "bytes32",
+        "indexed": false,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "recipient",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Withdrawn",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "beneficiary",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "WorkflowActivated",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "decisionId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "WorkflowCreated",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "workflowHash",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "termsHash",
+        "type": "bytes32",
+        "indexed": false,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "hardDeadline",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "WorkflowExpired",
+    "inputs": [
+      {
+        "name": "workflowId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "error",
+    "name": "DeadlinePassed",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InexactTransfer",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidAuthorization",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidClasses",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidSignature",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "InvalidTerms",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "LiableRepairer",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "NotMature",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "NothingToWithdraw",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "Paused",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "Reentrancy",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "TransferFailed",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "Unauthorized",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "WrongState",
+    "inputs": []
+  }
+]

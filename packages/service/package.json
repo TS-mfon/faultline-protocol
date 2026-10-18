@@ -1,0 +1,9 @@
+{
+  "name": "@faultline/service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": { "test": "node ../../scripts/verify.mjs service" },
+  "dependencies": { "@faultline/protocol": "0.1.0", "mongodb": "^7.6.0", "viem": "^2.38.0" }
+}

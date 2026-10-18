@@ -1,0 +1,35 @@
+{
+  "name": "faultline-protocol",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "npm@11.16.0",
+  "scripts": {
+    "dev": "npm run dev --workspace @faultline/web",
+    "build": "npm run build --workspace @faultline/web",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "verify:protocol": "node scripts/verify.mjs protocol",
+    "verify:genlayer": "node scripts/verify.mjs genlayer",
+    "verify:escrow": "node scripts/verify.mjs escrow",
+    "verify:consensus": "node scripts/verify.mjs consensus",
+    "verify:settlement": "node scripts/verify.mjs settlement",
+    "verify:worker": "node scripts/verify.mjs worker",
+    "verify:integrations": "node scripts/verify.mjs integrations",
+    "verify:web": "node scripts/verify.mjs web",
+    "verify:mongo": "node scripts/verify.mjs mongo",
+    "verify:live-demos": "node scripts/verify.mjs live-demos",
+    "verify:release": "node scripts/verify.mjs release"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "4.1.11"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "examples"
+  ]
+}

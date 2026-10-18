@@ -1,0 +1,11 @@
+# Faultline investigation console
+
+Mount `FaultlineApp` (default or named export from `apps/web/components/FaultlineApp.tsx`) in the driver-owned page. It accepts optional `initialView="workflows" | "agents" | "protocol"`. The route-neutral `app/(ui)/console.tsx` re-exports it. The existing root layout imports `styles/globals.css`.
+
+No new dependencies, external assets, fonts, or server configuration are required. Navigation is client-local; driver routes can also mount each initial view. Three local read-only replays are used while the API is being checked or is absent. A successful empty API response shows an empty workspace. Replay source and record mode remain explicit; no replay transactions are sent.
+
+API contract: `/api/v1`, `{data: T}` or `{error:{code,message}}`. Workflow listing returns `WorkflowRecord[]`, detail returns `WorkflowRecord`. Audit evidence and operations are optional arrays; missing evidence is disclosed. Live writes carry an in-memory wallet-bound bearer session and an Idempotency-Key retained on retries. Creation body: `{manifest,mode:"live"}`. Lifecycle writes use the endpoint's protocol document directly (`HandoffManifest`, `EvidenceItem`, `RepairSubmission`), `{nodeId,impact}`, `{handoffId}`, or `{}`. Confirm body: `{txHash}`. Actor identity is derived by the API from the bearer token.
+
+Signing stays caller-owned: the UI displays/downloads the returned `TransactionIntent`, accepts a transaction hash after external wallet/SDK signing, then asks the service to independently verify it. Authentication uses `/auth/challenge` and `/auth/verify`: the user reviews the exact message and signs using an injected EIP-1193 wallet, or pastes an externally produced personal-message signature. Existing bearer sessions may also be entered. Issued sessions expire in memory. Financial transaction signing remains external; pending operations can be resumed from Receipts. Operation refresh and reputation lookup use the documented API reads.
+
+Local examples are illustrative, content-hashed data, not captured chain histories; their audit downloads disclose this. Hashes commit local evidence text, not proof of consensus. Replay acknowledgment counts are deliberately zero where no illustrative acknowledgment is supplied.

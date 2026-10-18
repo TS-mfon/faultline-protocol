@@ -1,0 +1,19 @@
+{
+  "name": "@faultline/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "run": "node --import tsx src/main.ts"
+  },
+  "dependencies": {
+    "@faultline/protocol": "0.1.0",
+    "@faultline/service": "0.1.0",
+    "@faultline/chain": "0.1.0",
+    "mongodb": "^7.6.0",
+    "genlayer-js": "^1.1.8",
+    "viem": "^2.57.2",
+    "@faultline/sdk": "0.1.0"
+  }
+}

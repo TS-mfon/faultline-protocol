@@ -1,0 +1,57 @@
+name: Verify Faultline
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm audit --audit-level=low
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-results
+          path: |
+            playwright-report/
+            test-results/
+  contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r contracts/genlayer/requirements-dev.txt
+      - run: genvm-lint download --version v0.3.0-rc7
+      - run: bash contracts/genlayer/verify.sh
+      - run: FOUNDRY_OFFLINE=false forge build --root contracts/base
+      - run: bash contracts/base/verify.sh
+  mongo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - name: Verify a disposable MongoDB replica set
+        run: npm run verify:mongo

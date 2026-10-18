@@ -1,0 +1,28 @@
+{
+  "name": "@faultline/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build --webpack",
+    "start": "next start --hostname 127.0.0.1"
+  },
+  "dependencies": {
+    "@faultline/a2a": "0.1.0",
+    "@faultline/chain": "0.1.0",
+    "@faultline/examples": "0.1.0",
+    "@faultline/mcp": "0.1.0",
+    "@faultline/protocol": "0.1.0",
+    "@faultline/sdk": "0.1.0",
+    "@faultline/service": "0.1.0",
+    "lucide-react": "^0.468.0",
+    "next": "16.3.8",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "viem": "^2.38.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0"
+  }
+}

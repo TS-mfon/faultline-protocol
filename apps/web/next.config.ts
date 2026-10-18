@@ -1,0 +1,3 @@
+import type { NextConfig } from 'next';
+const config: NextConfig = { experimental: { useTypeScriptCli: false, cpus: 2, webpackBuildWorker: false, workerThreads: true }, transpilePackages: ['@faultline/examples', '@faultline/chain', '@faultline/protocol', '@faultline/service', '@faultline/sdk', '@faultline/a2a', '@faultline/mcp'], poweredByHeader: false, serverExternalPackages: ['mongodb'], async headers(){return [{source:'/:path*',headers:[{key:'X-Content-Type-Options',value:'nosniff'},{key:'Referrer-Policy',value:'strict-origin-when-cross-origin'},{key:'X-Frame-Options',value:'DENY'}]}];} };
+export default config;

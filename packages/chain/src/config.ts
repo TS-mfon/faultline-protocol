@@ -1,0 +1,7 @@
+import { AddressSchema, HashSchema, ProtocolError } from '@faultline/protocol';
+export interface ChainConfig { evidenceOrigin: string; genlayerRpc: string; genlayerEvmRpc?: string; baseRpc: string; genlayerAddress: `0x${string}`; escrowAddress: `0x${string}`; genlayerCodeHash: string; baseCodeHash: string; attestor: `0x${string}` }
+export function chainConfig(env: NodeJS.ProcessEnv = process.env): ChainConfig {
+  const required = (name: string) => { const value = env[name]; if (!value) throw new ProtocolError('NOT_CONFIGURED', `${name} is required`); return value; };
+  const rpc = (name: string) => { const value = required(name); const url = new URL(value); if (url.protocol !== 'https:') throw new ProtocolError('CONFIGURATION', 'Live RPC URLs must use HTTPS'); return value; };
+  return { evidenceOrigin: `${rpc('PUBLIC_ORIGIN').replace(/\/$/,'')}/api/v1/evidence`, genlayerRpc: rpc('GENLAYER_RPC_URL'), ...(env.GENLAYER_EVM_RPC_URL ? { genlayerEvmRpc: rpc('GENLAYER_EVM_RPC_URL') } : {}), baseRpc: rpc('BASE_RPC_URL'), genlayerAddress: AddressSchema.parse(required('GENLAYER_CONTRACT_ADDRESS')) as `0x${string}`, escrowAddress: AddressSchema.parse(required('BASE_ESCROW_ADDRESS')) as `0x${string}`, genlayerCodeHash: HashSchema.parse(required('GENLAYER_CODE_HASH')), baseCodeHash: HashSchema.parse(required('BASE_CODE_HASH')), attestor: AddressSchema.parse(required('ATTESTOR_ADDRESS')) as `0x${string}` };
+}

@@ -1,0 +1,245 @@
+{
+  "notice": "UNSIGNED ILLUSTRATIVE TEMPLATES ONLY. Replace every commitment/address/expiry with independently verified live data. Read nextNonce and termsHash from the escrow and independently reconstruct the latter. No live authorization or deployment is claimed.",
+  "examples": {
+    "ActivationAuthorization": {
+      "domain": {
+        "name": "FaultlineBondEscrow",
+        "version": "1",
+        "chainId": "84532",
+        "verifyingContract": "0x4444444444444444444444444444444444444444"
+      },
+      "primaryType": "ActivationAuthorization",
+      "types": {
+        "ActivationAuthorization": [
+          {
+            "name": "workflowId",
+            "type": "bytes32"
+          },
+          {
+            "name": "workflowHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "termsHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "genlayerChainId",
+            "type": "uint256"
+          },
+          {
+            "name": "genlayerContract",
+            "type": "address"
+          },
+          {
+            "name": "caseId",
+            "type": "bytes32"
+          },
+          {
+            "name": "snapshotHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "decisionId",
+            "type": "bytes32"
+          },
+          {
+            "name": "phase",
+            "type": "uint8"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256"
+          },
+          {
+            "name": "expiry",
+            "type": "uint256"
+          }
+        ]
+      },
+      "message": {
+        "workflowId": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "workflowHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "termsHash": "0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "genlayerChainId": "4221",
+        "genlayerContract": "0x2222222222222222222222222222222222222222",
+        "caseId": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "snapshotHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "decisionId": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "phase": 1,
+        "nonce": "0",
+        "expiry": "2000000000"
+      }
+    },
+    "ReservationAuthorization": {
+      "domain": {
+        "name": "FaultlineBondEscrow",
+        "version": "1",
+        "chainId": "84532",
+        "verifyingContract": "0x4444444444444444444444444444444444444444"
+      },
+      "primaryType": "ReservationAuthorization",
+      "types": {
+        "ReservationAuthorization": [
+          {
+            "name": "workflowId",
+            "type": "bytes32"
+          },
+          {
+            "name": "workflowHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "termsHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "genlayerChainId",
+            "type": "uint256"
+          },
+          {
+            "name": "genlayerContract",
+            "type": "address"
+          },
+          {
+            "name": "caseId",
+            "type": "bytes32"
+          },
+          {
+            "name": "snapshotHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "decisionId",
+            "type": "bytes32"
+          },
+          {
+            "name": "phase",
+            "type": "uint8"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256"
+          },
+          {
+            "name": "expiry",
+            "type": "uint256"
+          },
+          {
+            "name": "remedyId",
+            "type": "bytes32"
+          },
+          {
+            "name": "classesHash",
+            "type": "bytes32"
+          }
+        ]
+      },
+      "message": {
+        "workflowId": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "workflowHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "termsHash": "0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "genlayerChainId": "4221",
+        "genlayerContract": "0x2222222222222222222222222222222222222222",
+        "caseId": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "snapshotHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "decisionId": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "phase": 2,
+        "nonce": "1",
+        "expiry": "2000000000",
+        "remedyId": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "classesHash": "0x1111111111111111111111111111111111111111111111111111111111111111"
+      }
+    },
+    "ReleaseAuthorization": {
+      "domain": {
+        "name": "FaultlineBondEscrow",
+        "version": "1",
+        "chainId": "84532",
+        "verifyingContract": "0x4444444444444444444444444444444444444444"
+      },
+      "primaryType": "ReleaseAuthorization",
+      "types": {
+        "ReleaseAuthorization": [
+          {
+            "name": "workflowId",
+            "type": "bytes32"
+          },
+          {
+            "name": "workflowHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "termsHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "genlayerChainId",
+            "type": "uint256"
+          },
+          {
+            "name": "genlayerContract",
+            "type": "address"
+          },
+          {
+            "name": "caseId",
+            "type": "bytes32"
+          },
+          {
+            "name": "snapshotHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "decisionId",
+            "type": "bytes32"
+          },
+          {
+            "name": "phase",
+            "type": "uint8"
+          },
+          {
+            "name": "nonce",
+            "type": "uint256"
+          },
+          {
+            "name": "expiry",
+            "type": "uint256"
+          },
+          {
+            "name": "remedyId",
+            "type": "bytes32"
+          },
+          {
+            "name": "reservationDecisionId",
+            "type": "bytes32"
+          },
+          {
+            "name": "reservationSnapshotHash",
+            "type": "bytes32"
+          },
+          {
+            "name": "repairHash",
+            "type": "bytes32"
+          }
+        ]
+      },
+      "message": {
+        "workflowId": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "workflowHash": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "termsHash": "0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "genlayerChainId": "4221",
+        "genlayerContract": "0x2222222222222222222222222222222222222222",
+        "caseId": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "snapshotHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "decisionId": "0x3333333333333333333333333333333333333333333333333333333333333333",
+        "phase": 3,
+        "nonce": "2",
+        "expiry": "2000000000",
+        "remedyId": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "reservationDecisionId": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "reservationSnapshotHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+        "repairHash": "0x1111111111111111111111111111111111111111111111111111111111111111"
+      }
+    }
+  }
+}

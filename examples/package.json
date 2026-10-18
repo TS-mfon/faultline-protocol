@@ -1,0 +1,20 @@
+{
+  "name": "@faultline/examples",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "replay": "node --import tsx src/replay-cli.ts",
+    "live": "node --import tsx src/live-cli.ts"
+  },
+  "dependencies": {
+    "@faultline/protocol": "0.1.0",
+    "@faultline/sdk": "0.1.0",
+    "@faultline/chain": "0.1.0",
+    "@faultline/service": "0.1.0",
+    "@faultline/worker": "0.1.0",
+    "viem": "^2.57.2",
+    "mongodb": "^7.6.0"
+  },
+  "exports": "./src/scenarios.ts"
+}
