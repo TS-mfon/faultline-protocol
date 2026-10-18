@@ -7,9 +7,11 @@ Updated 2026-10-18. Faultline is a testnet prototype. Local release checks pass;
 - Application: https://faultline-protocol-theta.vercel.app
 - Source: https://github.com/TS-mfon/faultline-protocol
 - Base Sepolia escrow: `0x0591a86dadd8ed8edcbba3dfdab8240019006730`. Creation transaction `0x3dbee249a8cfaf751493674c0f9d36ac1f735924c526019ab24a4bb3ffa24e6c` executed successfully and is finalized.
-- GenLayer Bradbury contract: `0x0f7688ab324f8b367ed4d3d0f1bf233f30fed58a`. Native deployment `0xdac4fac139455f4f7097285abaaddd00532279aea2ede391b4fde032399f892d` executed with `FINISHED_WITH_RETURN` and `AGREE`. As observed at 03:36 UTC, its status was `ACCEPTED`; native eligibility begins no earlier than 04:00:22 UTC. That time alone does not establish finality.
+- GenLayer Bradbury contract: `0x0f7688ab324f8b367ed4d3d0f1bf233f30fed58a`. Native deployment `0xdac4fac139455f4f7097285abaaddd00532279aea2ede391b4fde032399f892d` executed with `FINISHED_WITH_RETURN` and `AGREE`. The native receipt reported `FINALIZED` when rechecked at 04:01 UTC on 2026-10-18.
 
-The accepted GenLayer submission is `0x85b0b24e8c32863012910cb0aee3a6a320dd71c422c700f5b3f81fb2d076359d`. The 15,259-byte compressed bundle has SHA256 `0x5f50126a895715ed48b33f1d90f3760b8f3d35dffc936ecbe0ad1bbfbef34dec`. It contains the mechanically verified contract, with unchanged storage, public interface and literal values. Native schema generation matched the readable source. The rejected oversized envelopes remain archived privately and were replaced only after checking their precise RPC rejection, absence and unchanged nonce.
+The GenLayer EVM submission is `0x85b0b24e8c32863012910cb0aee3a6a320dd71c422c700f5b3f81fb2d076359d`. The 15,259-byte compressed bundle has SHA256 `0x5f50126a895715ed48b33f1d90f3760b8f3d35dffc936ecbe0ad1bbfbef34dec`. It contains the mechanically verified contract, with unchanged storage, public interface and literal values. Native schema generation matched the readable source. The rejected oversized envelopes remain archived privately and were replaced only after checking their precise RPC rejection, absence and unchanged nonce.
+
+[The public deployment record](deployment.json) binds the actual creation transactions, finalized execution, constructor identities and code hashes. Capture independently compared the deployed GenLayer source and Base runtime against the local build and checked the configured attestor and evidence origin.
 
 The public application is being updated from its replay preview to this release. A reachable page alone does not establish a configured live API. Deployment capture and live gates must pass before recording that transition as complete.
 
@@ -27,7 +29,7 @@ Worker startup failures use a bounded logger, including configuration and databa
 
 | Check | Result | Evidence boundary |
 | --- | --- | --- |
-| TypeScript types and regressions | Passed | Protocol, application, integrations, worker, demonstrations and release controls; chain responses are mocked |
+| TypeScript types and regressions | 146 passed | Protocol, application, integrations, worker, demonstrations and release controls; chain responses are mocked; two MongoDB checks run separately |
 | Production build | Passed | Next.js 16.3.8 application and API routes |
 | Browser lifecycle | 18 passed | Desktop/mobile fixtures cover caller signatures, pending finality, evidence, repair, payout and refunds |
 | MongoDB | Both integration suites passed | Disposable real replica set; persistence, transactions, concurrent idempotency, exact evidence bytes and stale-lease rejection |

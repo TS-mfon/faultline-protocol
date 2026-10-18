@@ -4,10 +4,17 @@ import { ProtocolError } from '@faultline/protocol';
 
 const required = (name: string) => { const value = process.env[name]; if (!value) throw new ProtocolError('NOT_CONFIGURED', `${name} is required`); return value; };
 let stage = 'configuration';
+let diagnostic: Record<string, unknown> | undefined;
 function command(executable: string, args: string[], input?: string) {
   // Values travel over stdin, never shell interpolation or process arguments.
   const result = spawnSync(executable, args, { input, encoding: 'utf8', timeout: 60000, maxBuffer: 2_000_000 });
-  if (result.error || result.status !== 0) throw new ProtocolError('HOSTING_COMMAND_FAILED', 'Inspect the named hosting configuration stage');
+  if (result.error || result.status !== 0) {
+    let detail = (result.stderr ?? '') + (result.stdout ?? '');
+    for (const value of [input, ...Object.entries(process.env).filter(([name]) => /KEY|SECRET|PASSWORD|TOKEN|URI|RPC_URL/.test(name)).map(([, value]) => value)]) if (value) detail = detail.split(value).join('[redacted]');
+    detail = detail.replace(/https?:\/\/\S+/g, '[URL]').replace(/0x[0-9a-fA-F]{64,}/g, '[redacted]').slice(-600);
+    diagnostic = { exit: result.status, signal: result.signal, error: (result.error as NodeJS.ErrnoException | undefined)?.code, detail };
+    throw new ProtocolError('HOSTING_COMMAND_FAILED', 'Inspect the named hosting configuration stage');
+  }
   return result.stdout;
 }
 
@@ -21,7 +28,7 @@ async function main() {
     const project = JSON.parse(await readFile('.vercel/project.json', 'utf8'));
     for (const name of [...shared, ...rpc, 'MONGODB_URI', 'AUTH_SECRET']) {
       stage = `web:${name}`;
-      command('vercel', ['env', 'add', name, 'production', '--project', project.projectId, '--force', '--sensitive', '--yes'], required(name));
+      command('vercel', ['env', 'add', name, 'production', '--project', project.projectId, '--force', '--type', shared.includes(name) ? 'config' : 'secret', '--yes'], required(name));
       console.log(JSON.stringify({ configured: name, destination: 'vercel-production' }));
     }
     return;
@@ -47,4 +54,4 @@ async function main() {
   // Enabling schedules is an explicit final step after app/API and funding verification.
   console.log(JSON.stringify({ configured: true, schedulesChanged: false }));
 }
-void main().catch(error => { console.error(JSON.stringify({ action: 'configure-hosting', status: 'UNMET', stage, reason: error instanceof ProtocolError ? error.code : 'CONFIGURATION_STOPPED' })); process.exitCode = 1; });
+void main().catch(error => { console.error(JSON.stringify({ action: 'configure-hosting', status: 'UNMET', stage, reason: error instanceof ProtocolError ? error.code : 'CONFIGURATION_STOPPED', ...(diagnostic ? { diagnostic } : {}) })); process.exitCode = 1; });
