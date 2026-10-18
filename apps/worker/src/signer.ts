@@ -6,13 +6,14 @@ import { ProtocolError, USDC_ADDRESS, hashCanonical, type TransactionIntent } fr
 import type { Collection, Db } from 'mongodb';
 import type { ChainConfig } from '@faultline/chain';
 export interface SignedRecord { _id:string; intentHash:string; chainId:number; from:string; nonce:number; raw:Hex; evmHash:Hex; logicalHash?:string; }
-export interface SigningJournal { get(id:string):Promise<SignedRecord|null>; latestNonce(chainId:number,from:string):Promise<number>; insert(record:SignedRecord):Promise<SignedRecord>; setLogicalHash(id:string,hash:string):Promise<void>; }
+export interface SigningJournal { get(id:string):Promise<SignedRecord|null>; latest(chainId:number,from:string):Promise<SignedRecord|null>; latestNonce(chainId:number,from:string):Promise<number>; insert(record:SignedRecord):Promise<SignedRecord>; setLogicalHash(id:string,hash:string):Promise<void>; }
 export class MongoSigningJournal implements SigningJournal {
   private c:Collection<SignedRecord>;
   constructor(db:Db){this.c=db.collection<SignedRecord>('faultline_signed_transactions');}
   async initialize(){await this.c.createIndex({chainId:1,from:1,nonce:1},{unique:true});}
   get(id:string){return this.c.findOne({_id:id});}
-  async latestNonce(chainId:number,from:string){return (await this.c.find({chainId,from}).sort({nonce:-1}).limit(1).next())?.nonce??-1;}
+  latest(chainId:number,from:string){return this.c.find({chainId,from}).sort({nonce:-1}).limit(1).next();}
+  async latestNonce(chainId:number,from:string){return (await this.latest(chainId,from))?.nonce??-1;}
   async insert(record:SignedRecord){try{await this.c.insertOne(record);return record;}catch(e){const old=await this.get(record._id);if(old&&old.intentHash===record.intentHash)return old;throw e;}}
   async setLogicalHash(id:string,hash:string){const result=await this.c.updateOne({_id:id,$or:[{logicalHash:{$exists:false}},{logicalHash:hash}]},{$set:{logicalHash:hash}});if(!result.matchedCount)throw new ProtocolError('TRANSACTION_CONFLICT','Journal already binds another transaction');}
 }

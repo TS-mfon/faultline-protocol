@@ -1,10 +1,9 @@
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { privateKeyToAccount } from 'viem/accounts';
-import { erc20Abi } from 'viem';
-import { FaultlineClient, bondApproval } from '@faultline/sdk';
+import { FaultlineClient } from '@faultline/sdk';
 import { LiveChainGateway, type ChainConfig } from '@faultline/chain';
-import { USDC_ADDRESS, hashCanonical, hashText } from '@faultline/protocol';
+import { hashCanonical } from '@faultline/protocol';
 import { DurableSigner } from '@faultline/worker';
 import type { SigningJournal } from '../../apps/worker/src/signer';
 import { initialState, runTick, type RunState } from './live';
@@ -12,6 +11,7 @@ import type { Domain } from './scenarios';
 import type { TaskOutput, TaskRequest } from './tasks';
 import { artifact } from './artifacts';
 import { verifyAudit } from './verify';
+import { fundApproval, readyToDeposit } from './funding';
 
 export type EvidenceKind = 'consensus' | 'recovery';
 export type RunEvidence = ReturnType<typeof artifact>;
@@ -59,21 +59,15 @@ export function exampleRunner(config: ChainConfig, gateway: LiveChainGateway, en
       const initial = initialState(domain, actors, runId), state = await storage.load(initial);
       if (state.schemaVersion !== 2 || hashCanonical(initial.manifest) !== hashCanonical(state.manifest)) throw new Error('Run version, identities or immutable terms changed');
       const signers = new Map([...accounts, repairer].map(account => [account.address.toLowerCase(), new DurableSigner(config, account, storage.journal, { spender: config.escrowAddress, amount: '12000000' })]));
+      const funding = (actor: string) => ({ config, gateway, journal: storage.journal, signer: signers.get(actor)!, beforeSigning: () => storage.beforeSigning() });
       const result = await runTick({
         state, save: () => storage.save(state), client, evidenceOrigin: config.evidenceOrigin, task,
         recordAdjudication: async audit => { await storage.publishEvidence('consensus', state, artifact(state, audit, 'consensus')); },
-        sign: async (actor, operation) => { await storage.beforeSigning(); return signers.get(actor)!.submit(operation.id, operation.intent!); },
-        fundApproval: async (actor, amount) => {
-          const allowance = await gateway.base.readContract({ address: USDC_ADDRESS, abi: erc20Abi, functionName: 'allowance', args: [actor as `0x${string}`, config.escrowAddress], blockTag: 'finalized' });
-          if (allowance >= BigInt(amount)) return true;
-          await storage.beforeSigning();
-          const hash = await signers.get(actor)!.submit(hashText(`approve:${state.manifest.id}:${actor}`), bondApproval(config.escrowAddress, amount));
-          if (!hash) return false;
-          let receipt; try { receipt = await gateway.base.getTransactionReceipt({ hash: hash as `0x${string}` }); } catch { return false; }
-          if (receipt.status !== 'success') throw new Error('USDC approval reverted');
-          const block = await gateway.base.getBlock({ blockTag: 'finalized' });
-          return block.number >= receipt.blockNumber && (await gateway.base.getBlock({ blockNumber: receipt.blockNumber })).hash === receipt.blockHash;
+        sign: async (actor, operation) => {
+          if (operation.intent?.chain === 'base' && operation.intent.functionName === 'depositBond' && !await readyToDeposit(funding(actor), state.manifest.id, actor, state.manifest.bonds[actor], operation.id)) return null;
+          await storage.beforeSigning(); return signers.get(actor)!.submit(operation.id, operation.intent!);
         },
+        fundApproval: (actor, amount) => fundApproval(funding(actor), state.manifest.id, actor, amount),
         verifyAudit: async audit => {
           const existing = await storage.readEvidence('recovery', state), candidate = artifact(state, audit, 'recovery');
           if (existing && (hashCanonical(existing.agentRuns) !== hashCanonical(candidate.agentRuns) || hashCanonical(existing.audit.workflow.manifest) !== hashCanonical(state.manifest))) throw new Error('Immutable recovery evidence conflicts with the run');

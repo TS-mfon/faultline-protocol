@@ -6,7 +6,7 @@ import {runOne} from '../src';
 import {setup,A,WORKER} from '../../../packages/service/test/fixtures';
 it('persists signed bytes before retry and rejects replacement intent after a crash',async()=>{
  const records=new Map<string,SignedRecord>();
- const journal:SigningJournal={get:async id=>records.get(id)??null,latestNonce:async()=>-1,insert:async r=>{records.set(r._id,r);return r;},setLogicalHash:async()=>{}};
+ const journal:SigningJournal={get:async id=>records.get(id)??null,latest:async()=>null,latestNonce:async()=>-1,insert:async r=>{records.set(r._id,r);return r;},setLogicalHash:async()=>{}};
  const intent:TransactionIntent={chain:'base',chainId:84532,to:A,functionName:'withdrawFor',args:[hashText('workflow'),A],value:'0'};
  const sign=vi.fn(async()=>({_id:'id',intentHash:hashCanonical(intent),chainId:84532,from:A,nonce:1,raw:'0x1234' as const,evmHash:keccak256('0x1234')}));
  const first=await journalOnce(journal,'id',intent,sign);expect(await journalOnce(journal,'id',intent,sign)).toEqual(first);expect(sign).toHaveBeenCalledTimes(1);

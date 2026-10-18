@@ -19,6 +19,8 @@ Completed recovery requires a distinct successful finalized adjudication, accept
 
 The worker and demonstration runner preserve signatures before broadcasting. MongoDB checkpoints, leases, immutable evidence and caller journals survive runner replacement. The scheduled suite freezes exactly nine runs: three each in software, research and procurement. Tasks use a labeled deterministic, keyless harness. GenLayer alone judges responsibility and repair acceptance; no separate model-provider credential is required.
 
+The shared-wallet funding runner keeps each exact 12-USDC approval with its run and requires canonical Base finality before another run can use that wallet's allowance. Its regressions cover interleaved runs, interrupted approvals, saved unsigned deposits, reverted transactions and noncanonical receipts. The MongoDB reconnect check verifies the latest signed record independently for each chain and caller.
+
 Worker startup failures use a bounded logger, including configuration and database initialization errors. Public operation responses and artifacts exclude private keys, bearer tokens and signed transaction payloads.
 
 ## Measured local verification

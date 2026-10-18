@@ -12,7 +12,7 @@ vi.mock('viem', async original => ({ ...await original<typeof import('viem')>(),
 it('signs the SDK-compatible Bradbury envelope once and preserves its native transaction identity on resume', async () => {
   const records = new Map<string, SignedRecord>();
   const journal: SigningJournal = {
-    get: async id => records.get(id) ?? null, latestNonce: async () => -1,
+    get: async id => records.get(id) ?? null, latest: async () => null, latestNonce: async () => -1,
     insert: async record => { records.set(record._id, record); return record; },
     setLogicalHash: async (id, hash) => { records.get(id)!.logicalHash = hash; },
   };

@@ -29,6 +29,10 @@ it.skipIf(!process.env.MONGODB_TEST_URI)('scheduled demos preserve signed record
     await first.save(state); await first.setCursor(3);
     const record = { _id: hashText('mock signature'), intentHash: hashText('mock intent'), chainId: 4221, from: actors.creator, nonce: 7, raw: '0x1234' as const, evmHash: keccak256('0x1234') };
     await first.journal.insert(record);
+    const older = { ...record, _id: hashText('earlier signature'), nonce: 6 };
+    await first.journal.insert(older);
+    await first.journal.insert({ ...record, _id: hashText('another chain'), chainId: 84532, nonce: 50 });
+    await first.journal.insert({ ...record, _id: hashText('another signer'), from: actors.repairer, nonce: 60 });
     const evidence = artifact(state, { mode: 'replay', workflow: { manifest: state.manifest, mode: 'replay', hash: plan.workflowHash }, operations: [], snapshots: [] }, 'consensus');
     await first.publishEvidence('consensus', state, evidence);
     await first.publishEvidence('consensus', state, evidence);
@@ -49,6 +53,8 @@ it.skipIf(!process.env.MONGODB_TEST_URI)('scheduled demos preserve signed record
     expect(await restarted.load(initialState('software', actors, 'durable-mongo-test'))).toEqual(state);
     expect(await restarted.journal.get(record._id)).toEqual(record);
     expect(await restarted.journal.latestNonce(4221, actors.creator)).toBe(7);
+    expect(await restarted.journal.latest(4221, actors.creator)).toEqual(record);
+    expect(await restarted.journal.latest(84532, actors.repairer)).toBeNull();
     expect(await restarted.readEvidence('consensus', state)).toEqual(evidence);
     expect(await restarted.exportEvidence()).toHaveLength(1);
     await restarted.release();

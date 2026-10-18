@@ -22,7 +22,8 @@ export class FileSigningJournal implements SigningJournal {
  constructor(private path:string){}
  private async all(){return await readJson<Record<string,SignedRecord>>(this.path)??{};}
  async get(id:string){return (await this.all())[id]??null;}
- async latestNonce(chainId:number,from:string){return Math.max(-1,...Object.values(await this.all()).filter(r=>r.chainId===chainId&&r.from===from).map(r=>r.nonce));}
+ async latest(chainId:number,from:string){return Object.values(await this.all()).filter(r=>r.chainId===chainId&&r.from===from).sort((a,b)=>b.nonce-a.nonce)[0]??null;}
+ async latestNonce(chainId:number,from:string){return (await this.latest(chainId,from))?.nonce??-1;}
  async insert(record:SignedRecord){const all=await this.all(),old=all[record._id];if(old){if(old.intentHash!==record.intentHash)throw new Error('Immutable journal conflict');return old;}if(Object.values(all).some(r=>r.chainId===record.chainId&&r.from===record.from&&r.nonce===record.nonce))throw new Error('Nonce already reserved');all[record._id]=record;await atomicJson(this.path,all);return record;}
  async setLogicalHash(id:string,hash:string){const all=await this.all(),r=all[id];if(!r||r.logicalHash&&r.logicalHash!==hash)throw new Error('Logical transaction conflict');r.logicalHash=hash;await atomicJson(this.path,all);}
 }
