@@ -3,7 +3,7 @@ import { hashCanonical, hashText, validateSnapshot, type Operation } from '@faul
 import type { ChainGateway, GatewayReceipt } from '@faultline/service';
 import { makeManifest, handoff, replay, scenarios, domains, type Domain } from '../../examples/src/scenarios';
 import { executeTask, type TaskOutput } from '../../examples/src/tasks';
-import { verifyConsensusArtifact, verifyConsensusSet, verifyDemonstration, verifyDeploymentRecord, verifyPublicRelease, type LiveArtifact } from '../../scripts/release-evidence';
+import { requireDemonstrationCoverage, verifyConsensusArtifact, verifyConsensusSet, verifyDemonstration, verifyDeploymentRecord, verifyPublicRelease, type LiveArtifact } from '../../scripts/release-evidence';
 
 // Synthetic receipt responses test the release oracle; they are never exported as live evidence.
 const address = (n: number) => `0x${n.toString(16).padStart(40, '0')}`;
@@ -92,6 +92,16 @@ it('requires a real repair payment even after consensus and deterministic repair
   await expect(verifyDemonstration(candidate, 'software', gateway as any)).rejects.toThrow('Missing reserve');
 });
 
+it('requires a separate recovery for all nine attempts and rejects missing or reused runs before receipt verification', () => {
+  const { artifacts } = fixture();
+  for (const artifact of artifacts) artifact.agentRuns.push(executeTask({ domain: artifact.domain, task: 'repair', source: scenarios[artifact.domain].source }));
+  expect(requireDemonstrationCoverage(artifacts)).toHaveLength(9);
+  expect(() => requireDemonstrationCoverage(artifacts.filter((_, index) => index % 3 === 0))).toThrow('THREE_ATTEMPTS');
+  expect(() => requireDemonstrationCoverage(artifacts.slice(1))).toThrow('THREE_ATTEMPTS');
+  artifacts[1] = structuredClone(artifacts[0]);
+  expect(() => requireDemonstrationCoverage(artifacts)).toThrow('ATTEMPT_REUSED');
+});
+
 it('binds deployment records to both chain identities, the attestor and the evidence origin', () => {
   const config = { escrowAddress: deployments.base.address, baseCodeHash: deployments.base.codeHash, genlayerAddress: deployments.genlayer.address,
     genlayerCodeHash: deployments.genlayer.codeHash, attestor: address(9), evidenceOrigin: 'https://faultline.test/api/v1/evidence' } as any;
@@ -104,7 +114,7 @@ it('binds deployment records to both chain identities, the attestor and the evid
 });
 
 it('public release must expose the exact independently verified completed workflows', async () => {
-  const ids = domains.map(domain => hashText(`mock-${domain}`)), origin = 'https://faultline.test', repository = 'https://github.com/example/faultline';
+  const ids = domains.flatMap(domain => [1, 2, 3].map(attempt => hashText(`mock-${domain}-${attempt}`))), origin = 'https://faultline.test', repository = 'https://github.com/example/faultline';
   let configured = true, listed = ids;
   const fetcher = vi.fn(async (url: string | URL | Request) => {
     const value = String(url);

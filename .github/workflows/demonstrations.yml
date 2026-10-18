@@ -14,6 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: testnet
     timeout-minutes: 10
+    outputs:
+      recovery_ready: ${{ steps.demos.outputs.recovery_ready }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,6 +24,7 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - name: Advance the same nine workflows through native finality and cure windows
+        id: demos
         run: node --import tsx scripts/run-demos.ts
         env:
           FAULTLINE_DEMOS_ENABLED: ${{ vars.FAULTLINE_DEMOS_ENABLED }}
@@ -49,5 +52,45 @@ jobs:
           if-no-files-found: ignore
           path: |
             artifacts/demo-status.json
+            artifacts/consensus/
+            artifacts/live/
+  verify-release:
+    needs: advance
+    if: needs.advance.outputs.recovery_ready == 'true'
+    runs-on: ubuntu-latest
+    environment: testnet
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - uses: foundry-rs/foundry-toolchain@v1
+      - run: FOUNDRY_OFFLINE=false forge build --root contracts/base
+      - uses: actions/download-artifact@v4
+        with:
+          name: public-demonstration-evidence
+          path: artifacts
+      - name: Reread every native and USDC receipt, deployed byte and public endpoint
+        run: node --import tsx scripts/verify-scheduled-release.ts
+        env:
+          PUBLIC_ORIGIN: ${{ vars.PUBLIC_ORIGIN }}
+          PUBLIC_REPOSITORY_URL: ${{ vars.PUBLIC_REPOSITORY_URL }}
+          GENLAYER_RPC_URL: ${{ secrets.GENLAYER_RPC_URL }}
+          GENLAYER_EVM_RPC_URL: ${{ secrets.GENLAYER_EVM_RPC_URL }}
+          BASE_RPC_URL: ${{ secrets.BASE_RPC_URL }}
+          GENLAYER_CONTRACT_ADDRESS: ${{ vars.GENLAYER_CONTRACT_ADDRESS }}
+          BASE_ESCROW_ADDRESS: ${{ vars.BASE_ESCROW_ADDRESS }}
+          GENLAYER_CODE_HASH: ${{ vars.GENLAYER_CODE_HASH }}
+          BASE_CODE_HASH: ${{ vars.BASE_CODE_HASH }}
+          ATTESTOR_ADDRESS: ${{ vars.ATTESTOR_ADDRESS }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-public-release
+          path: |
+            artifacts/deployment.json
+            artifacts/release-verification.json
             artifacts/consensus/
             artifacts/live/

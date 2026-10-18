@@ -130,6 +130,17 @@ export async function verifyDemonstration(artifact: LiveArtifact, domain: Domain
   return verifyAudit(artifact.audit, gateway);
 }
 
+/** Coverage is necessary but never substitutes for rereading each recovery receipt. */
+export function requireDemonstrationCoverage(artifacts: LiveArtifact[]) {
+  requireEvidence(artifacts.length >= domains.length * 3 && domains.every(domain => artifacts.filter(artifact => artifact.domain === domain).length >= 3), 'RECOVERY_REQUIRES_THREE_ATTEMPTS_PER_DOMAIN');
+  const ids = artifacts.map(artifact => {
+    requireEvidence(domains.includes(artifact.domain), 'UNKNOWN_RECOVERY_DOMAIN');
+    return scenarioArtifact(artifact, artifact.domain, 4).id;
+  });
+  requireEvidence(new Set(ids).size === ids.length, 'RECOVERY_ATTEMPT_REUSED');
+  return ids;
+}
+
 /** Enumerate all attempts; never quietly select a convenient final file or discard failures. */
 export async function readEvidence(root: string): Promise<LiveArtifact[]> {
   const result: LiveArtifact[] = [];
@@ -164,7 +175,7 @@ export async function verifyPublicRelease(origin: string, repository: string, wo
   const card = await (await get(`${origin}/.well-known/agent-card.json`)).json() as any;
   requireEvidence(card.name === 'Faultline Protocol' && card.supportedInterfaces?.some((entry: any) => entry.url === `${origin}/api/a2a` && entry.protocolVersion === '1.0'), 'PUBLIC_AGENT_CARD_MISMATCH');
   const workflows = await (await get(`${origin}/api/v1/workflows`)).json() as any;
-  requireEvidence(Array.isArray(workflows.data) && workflowIds.length >= domains.length && workflowIds.every(id =>
+  requireEvidence(Array.isArray(workflows.data) && workflowIds.length >= domains.length * 3 && new Set(workflowIds).size === workflowIds.length && workflowIds.every(id =>
     workflows.data.some((workflow: any) => workflow.manifest?.id === id && workflow.mode === 'live' && workflow.status === 'completed')), 'PUBLIC_VERIFIED_WORKFLOWS_MISSING');
   // GitHub API distinguishes an actual public source repository from a sign-in/marketing page.
   const source = await (await get(`https://api.github.com/repos${sourceUrl.pathname.replace(/\/$/, '')}`)).json() as any;

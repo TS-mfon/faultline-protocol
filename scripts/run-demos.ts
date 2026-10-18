@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb';
+import { appendFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import { join } from 'node:path';
 import { chainConfig, LiveChainGateway } from '@faultline/chain';
@@ -36,8 +37,11 @@ async function main() {
       }
       await store.setCursor((index + 1) % runs.length);
     }
-    for (const item of await store.exportEvidence()) await immutableJson(join('artifacts', item.kind === 'consensus' ? 'consensus' : 'live', item.value.domain, `${item.value.runId}.json`), item.value);
-    await atomicJson('artifacts/demo-status.json', { mode: 'live', taskGeneration: 'deterministic', checkedAt: new Date().toISOString(), results });
+    const evidence = await store.exportEvidence();
+    for (const item of evidence) await immutableJson(join('artifacts', item.kind === 'consensus' ? 'consensus' : 'live', item.value.domain, `${item.value.runId}.json`), item.value);
+    const recoveryArtifacts = evidence.filter(item => item.kind === 'recovery').length;
+    await atomicJson('artifacts/demo-status.json', { mode: 'live', taskGeneration: 'deterministic', checkedAt: new Date().toISOString(), recoveryArtifacts, results });
+    if (process.env.GITHUB_OUTPUT) await appendFile(process.env.GITHUB_OUTPUT, `recovery_ready=${recoveryArtifacts === runs.length}\n`);
   } finally { if (timer) clearInterval(timer); await store.release(); await client.close(); }
 }
 void main().catch(error => { console.error(JSON.stringify({ action: 'scheduled-demonstrations', status: 'UNMET', reason: error instanceof ProtocolError ? error.code : 'DEMO_RUNNER_STOPPED' })); process.exitCode = 1; });
